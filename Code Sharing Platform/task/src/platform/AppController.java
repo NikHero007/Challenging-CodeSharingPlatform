@@ -23,25 +23,23 @@ public class AppController {
 
     @PostMapping ("/api/code/new")
     public ResponseEntity<?> PostAPIcode (@RequestBody CodeSnippet codeSnippet) {
-        String uuid = codeSnippet.generateUUID();
-        codeSnippet.setUuid(uuid);
-
-        Code code = new Code(codeSnippet.getCode(), codeSnippet.getTime(),
-                codeSnippet.getViews(), codeSnippet.getUuid());
+        String newCodeSnippet = codeSnippet.getCode();
+        //устанавливаем новый код
+        Code code = new Code(newCodeSnippet);
         userService.save(code);
-        String output = "{\"id\" : \"" + code.getUuid() + "\"}";
+        String output = "{\"id\" : \"" + userService.count() + "\"}";
         return new ResponseEntity<>(output, HttpStatus.OK);
     }
 
     @GetMapping("/api/code/{N}")
-    public ResponseEntity<?> GetAPIcode (@PathVariable String N) {
+    public ResponseEntity<?> GetAPIcode (@PathVariable Long N) {
         Code code = userService.findCodeById(N);
 
         return new ResponseEntity<>(code, HttpStatus.OK);
     }
 
     @GetMapping("/code/{N}")
-    public String GetWebCode(@PathVariable String N, Model model) {
+    public String GetWebCode(@PathVariable Long N, Model model) {
         Code code = userService.findCodeById(N);
         model.addAttribute("code", code);
         return "GetWebCode";
@@ -52,12 +50,11 @@ public class AppController {
         return "GetNewWebCode";
     }
 
-/*    @GetMapping("/api/code/latest")
+    @GetMapping("/api/code/latest")
     public ResponseEntity<?> GetLatestAPI () {
         LinkedList<Code> latestList = new LinkedList<>();
         long count = userService.count() >= 10 ? (userService.count() - 9) : 1;
 
-        // тут поменять на без рестрикции сервис
         for(long counter = userService.count(); counter >= count; counter--) {
             Code code = userService.findCodeById(counter);
             latestList.add(code);
@@ -70,7 +67,6 @@ public class AppController {
         LinkedList<Code> latestList = new LinkedList<>();
         long count = userService.count() >= 10 ? (userService.count() - 9) : 1;
 
-        // тут поменять на без рестрикции сервис
         for(long counter = userService.count(); counter >= count; counter--) {
             Code code = userService.findCodeById(counter);
             latestList.add(code);
@@ -78,6 +74,6 @@ public class AppController {
 
         model.addAttribute("Codes", latestList);
         return "codeList";
-    }*/
+    }
 
 }

@@ -1,7 +1,5 @@
 package platform;
 
-import java.util.UUID;
-
 public class CodeSnippet {
     private String code = "";
 
@@ -10,10 +8,6 @@ public class CodeSnippet {
     private int views = -1;
 
     private String uuid = "";
-
-    public String generateUUID() {
-        return UUID.randomUUID().toString();
-    }
 
     public String getCode() {
         return code;
