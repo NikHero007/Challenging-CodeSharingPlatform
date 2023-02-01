@@ -11,11 +11,6 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "Code")
 public class Code {
 
-    @JsonIgnore
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long ID;
     @Column(name = "Code")
     private String code;
     @Column(name = "Date")
@@ -27,7 +22,9 @@ public class Code {
     @Column(name = "Views")
     private int views;
 
-    @Column(name = "UUID")
+    @JsonIgnore
+    @Id
+    @Column(name = "ID")
     private String uuid;
 
 
@@ -125,13 +122,4 @@ public class Code {
         this.uuid = uuid;
     }
 
-    @JsonIgnore
-    public Long getID() {
-        return ID;
-    }
-
-    @JsonIgnore
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
 }

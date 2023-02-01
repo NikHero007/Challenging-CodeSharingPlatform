@@ -3,7 +3,6 @@ package platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class UserService {
@@ -18,7 +17,7 @@ public class UserService {
         dbRepository.delete(code);
     }
 
-    public void deleteById(Long ID) {
+    public void deleteById(String ID) {
         dbRepository.deleteById(ID);
     }
 
@@ -26,7 +25,7 @@ public class UserService {
         return dbRepository.save(code);
     }
 
-    public Code findCodeById(Long ID) {
+    public Code findCodeById(String ID) {
         return dbRepository.findById(ID).get();
     }
 
